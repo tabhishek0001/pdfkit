@@ -127,6 +127,7 @@
   const loadOrganizer = async (file) => {
     const bytes = await file.arrayBuffer(); state.pdfBytes = bytes;
     const pdf = await pdfjsLib.getDocument({ data: bytes.slice(0) }).promise;
+    if (pdf.numPages > 100) throw new Error('For performance, organize PDFs with 100 pages or fewer at a time.');
     state.pages = [];
     for (let number = 1; number <= pdf.numPages; number++) {
       const page = await pdf.getPage(number); const viewport = page.getViewport({ scale: .32 });
@@ -147,7 +148,7 @@
     if (!state.files.length) throw new Error('Choose at least one JPG or PNG image.');
     const output = await PDFDocument.create();
     for (const file of state.files) {
-      const bytes = await file.arrayBuffer(); const image = file.type === 'image/png' ? await output.embedPng(bytes) : await output.embedJpg(bytes);
+      const bytes = await file.arrayBuffer(); const isPng = file.type === 'image/png' || /\\.png$/i.test(file.name); const image = isPng ? await output.embedPng(bytes) : await output.embedJpg(bytes);
       const page = output.addPage([image.width, image.height]); page.drawImage(image, { x: 0, y: 0, width: image.width, height: image.height });
     }
     const bytes = await output.save(); download(bytes, 'images.pdf'); resultLink(new Blob([bytes], { type: 'application/pdf' }), 'images.pdf', 'Download PDF');
