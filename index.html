@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8fc">
+  <meta name="description" content="Free browser-based PDF tools. Merge, split, organize, convert and compress PDF files privately on your device.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="PDFKit — Simple PDF tools, privately">
+  <meta property="og:description" content="Merge, split, organize and convert PDFs in your browser.">
+  <title>PDFKit — Simple PDF tools, privately</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+  <link href="assets/css/app.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body>
+<header class="site-header">
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="./"><span class="brand-mark"><i class="fa-solid fa-file-pdf"></i></span> PDFKit</a>
+      <div class="d-flex align-items-center gap-3 ms-auto">
+        <span class="privacy-note d-none d-sm-inline"><i class="fa-solid fa-shield-halved me-1"></i> Files stay on your device</span>
+        <a class="btn btn-sm btn-outline-dark" href="#tools">Explore tools</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<main>
+  <section class="hero-section">
+    <div class="container py-5">
+      <div class="hero-copy text-center mx-auto">
+        <span class="eyebrow"><i class="fa-solid fa-wand-magic-sparkles me-2"></i>YOUR EVERYDAY PDF WORKSPACE</span>
+        <h1 class="display-5 fw-bold mt-3">PDF tasks, <span>made simple.</span></h1>
+        <p class="lead text-secondary mt-3">Merge, split, organize and convert documents with straightforward tools that run in your browser.</p>
+        <div class="hero-trust mt-4"><span><i class="fa-solid fa-lock"></i> Private by design</span><span><i class="fa-solid fa-bolt"></i> No account required</span><span><i class="fa-solid fa-cloud-arrow-up"></i> No file upload for supported tools</span></div>
+      </div>
+    </div>
+  </section>
+  <section class="container pb-5" id="tools">
+    <div class="section-heading mb-4">
+      <div><span class="eyebrow">PDF TOOLBOX</span><h2 class="h3 fw-bold mt-2 mb-1">What would you like to do?</h2><p class="text-secondary mb-0">Choose a tool to get started. Your original files are not modified.</p></div>
+    </div>
+    <div class="row g-3 tool-grid">
+      <div class="col-12 col-md-6 col-xl-4"><button class="tool-card w-100 text-start active" data-tool="merge"><span class="tool-icon purple"><i class="fa-solid fa-layer-group"></i></span><span class="tool-title">Merge PDF</span><span class="tool-desc">Combine multiple PDF files into one document.</span><span class="tool-link">Open tool <i class="fa-solid fa-arrow-right"></i></span></button></div>
+      <div class="col-12 col-md-6 col-xl-4"><button class="tool-card w-100 text-start" data-tool="split"><span class="tool-icon blue"><i class="fa-solid fa-scissors"></i></span><span class="tool-title">Split & extract</span><span class="tool-desc">Extract selected pages or page ranges into a new PDF.</span><span class="tool-link">Open tool <i class="fa-solid fa-arrow-right"></i></span></button></div>
+      <div class="col-12 col-md-6 col-xl-4"><button class="tool-card w-100 text-start" data-tool="organize"><span class="tool-icon orange"><i class="fa-solid fa-table-cells-large"></i></span><span class="tool-title">Organize PDF</span><span class="tool-desc">Reorder, rotate and remove pages visually.</span><span class="tool-link">Open tool <i class="fa-solid fa-arrow-right"></i></span></button></div>
+      <div class="col-12 col-md-6 col-xl-4"><button class="tool-card w-100 text-start" data-tool="images"><span class="tool-icon green"><i class="fa-solid fa-images"></i></span><span class="tool-title">Images to PDF</span><span class="tool-desc">Turn JPG and PNG images into a single PDF.</span><span class="tool-link">Open tool <i class="fa-solid fa-arrow-right"></i></span></button></div>
+      <div class="col-12 col-md-6 col-xl-4"><button class="tool-card w-100 text-start" data-tool="convert"><span class="tool-icon red"><i class="fa-solid fa-file-image"></i></span><span class="tool-title">PDF to images</span><span class="tool-desc">Render PDF pages as downloadable PNG images.</span><span class="tool-link">Open tool <i class="fa-solid fa-arrow-right"></i></span></button></div>
+      <div class="col-12 col-md-6 col-xl-4"><button class="tool-card w-100 text-start" data-tool="compress"><span class="tool-icon teal"><i class="fa-solid fa-minimize"></i></span><span class="tool-title">Compress PDF</span><span class="tool-desc">Create a smaller, image-based PDF with adjustable quality.</span><span class="tool-link">Open tool <i class="fa-solid fa-arrow-right"></i></span></button></div>
+    </div>
+    <div class="workspace card border-0 shadow-sm mt-4" id="workspace">
+      <div class="workspace-head d-flex flex-wrap align-items-center justify-content-between gap-3">
+        <div><span class="eyebrow" id="tool-eyebrow">PDF TOOL</span><h2 class="h4 fw-bold mb-0 mt-1" id="tool-heading">Merge PDF files</h2></div>
+        <span class="local-badge"><i class="fa-solid fa-shield-halved me-1"></i> Browser processing</span>
+      </div>
+      <div class="workspace-body">
+        <div id="tool-description" class="text-secondary mb-3">Select two or more PDF files and combine them in the order shown.</div>
+        <div id="tool-options"></div>
+        <div class="drop-zone" id="drop-zone" tabindex="0" role="button" aria-label="Choose files">
+          <input type="file" id="file-input" class="visually-hidden" multiple>
+          <div class="drop-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+          <div class="fw-semibold mt-2" id="drop-title">Choose PDF files</div>
+          <div class="small text-secondary mt-1" id="drop-subtitle">or drag and drop them here</div>
+          <div class="small text-secondary mt-2" id="accepted-types">PDF files · Multiple files supported</div>
+        </div>
+        <div id="file-list" class="file-list mt-3" aria-live="polite"></div>
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mt-4">
+          <div class="small text-secondary" id="status-message" role="status">Ready when you are.</div>
+          <button class="btn btn-primary px-4" id="run-tool"><i class="fa-solid fa-wand-magic-sparkles me-2"></i><span id="run-label">Merge PDFs</span></button>
+        </div>
+        <div id="result-area" class="result-area mt-3" hidden></div>
+      </div>
+    </div>
+  </section>
+  <section class="privacy-section py-5">
+    <div class="container text-center"><div class="privacy-symbol"><i class="fa-solid fa-user-shield"></i></div><h2 class="h4 fw-bold mt-3">Your documents deserve privacy.</h2><p class="text-secondary mb-0 mx-auto privacy-copy">Supported operations run locally in your browser. PDFKit does not need an account or a file upload for these tools. Keep a backup of important documents before editing.</p></div>
+  </section>
+</main>
+<footer class="site-footer py-4"><div class="container d-flex flex-wrap justify-content-between gap-2"><span class="fw-semibold">PDFKit</span><span class="small text-secondary">Simple PDF tools, privately. <span id="year"></span></span></div></footer>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
