@@ -52,7 +52,7 @@
         });
       }
       const remove = document.createElement('button'); remove.type = 'button'; remove.title = 'Remove file'; remove.setAttribute('aria-label', 'Remove ' + file.name); remove.innerHTML = '<i class="fa-solid fa-xmark"></i>';
-      remove.addEventListener('click', () => { state.files.splice(index, 1); renderFiles(); resetResult(); });
+      remove.addEventListener('click', () => { state.files.splice(index, 1); if (state.tool === 'organize') { state.pages = []; state.pdfBytes = null; const organizer = $('#page-organizer'); if (organizer) organizer.remove(); } renderFiles(); resetResult(); });
       actions.append(remove); row.append(symbol, info, actions); list.append(row);
     });
     if (state.tool === 'organize' && state.pages.length) renderPages();
