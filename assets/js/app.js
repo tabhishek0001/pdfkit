@@ -148,7 +148,7 @@
     if (!state.files.length) throw new Error('Choose at least one JPG or PNG image.');
     const output = await PDFDocument.create();
     for (const file of state.files) {
-      const bytes = await file.arrayBuffer(); const isPng = file.type === 'image/png' || /\\.png$/i.test(file.name); const image = isPng ? await output.embedPng(bytes) : await output.embedJpg(bytes);
+      const bytes = await file.arrayBuffer(); const isPng = file.type === 'image/png' || /\.png$/i.test(file.name); const image = isPng ? await output.embedPng(bytes) : await output.embedJpg(bytes);
       const page = output.addPage([image.width, image.height]); page.drawImage(image, { x: 0, y: 0, width: image.width, height: image.height });
     }
     const bytes = await output.save(); download(bytes, 'images.pdf'); resultLink(new Blob([bytes], { type: 'application/pdf' }), 'images.pdf', 'Download PDF');
@@ -200,7 +200,7 @@
   $('#file-input').addEventListener('change', async (event) => {
     const selected = [...event.target.files]; event.target.value = '';
     const isImage = state.tool === 'images';
-    const valid = selected.filter((file) => isImage ? ['image/jpeg', 'image/png'].includes(file.type) || /\\.(jpe?g|png)$/i.test(file.name) : file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf'));
+    const valid = selected.filter((file) => isImage ? ['image/jpeg', 'image/png'].includes(file.type) || /\.(jpe?g|png)$/i.test(file.name) : file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf'));
     if (valid.length !== selected.length) setStatus('Some files were skipped. Use PDF files or JPG/PNG images as required.', true);
     if (!valid.length) return;
     state.files = state.files.concat(valid); if (!configs[state.tool].multiple) state.files = [valid[0]];
@@ -212,7 +212,7 @@
   ['dragleave', 'drop'].forEach((name) => $('#drop-zone').addEventListener(name, (event) => { event.preventDefault(); $('#drop-zone').classList.remove('dragover'); }));
   $('#drop-zone').addEventListener('drop', (event) => {
     const files = [...event.dataTransfer.files]; const input = $('#file-input');
-    const valid = files.filter((file) => state.tool === 'images' ? ['image/jpeg', 'image/png'].includes(file.type) || /\\.(jpe?g|png)$/i.test(file.name) : file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf'));
+    const valid = files.filter((file) => state.tool === 'images' ? ['image/jpeg', 'image/png'].includes(file.type) || /\.(jpe?g|png)$/i.test(file.name) : file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf'));
     if (!valid.length) { setStatus('No supported files found.', true); return; }
     state.files = state.tool === 'images' || state.tool === 'merge' ? state.files.concat(valid) : [valid[0]];
     renderFiles(); resetResult();
