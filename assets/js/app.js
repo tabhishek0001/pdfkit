@@ -32,7 +32,7 @@
     area.append(note);
   };
   const resetResult = () => { $('#result-area').hidden = true; $('#result-area').replaceChildren(); };
-  const clearFiles = () => { state.files = []; state.pages = []; state.pdfBytes = null; $('#file-list').replaceChildren(); resetResult(); };
+  const clearFiles = () => { state.files = []; state.pages = []; state.pdfBytes = null; $('#file-list').replaceChildren(); const organizer = $('#page-organizer'); if (organizer) organizer.remove(); resetResult(); };
   const renderFiles = () => {
     const list = $('#file-list'); list.replaceChildren();
     state.files.forEach((file, index) => {
@@ -199,7 +199,7 @@
   $('#file-input').addEventListener('change', async (event) => {
     const selected = [...event.target.files]; event.target.value = '';
     const isImage = state.tool === 'images';
-    const valid = selected.filter((file) => isImage ? ['image/jpeg', 'image/png'].includes(file.type) : file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf'));
+    const valid = selected.filter((file) => isImage ? ['image/jpeg', 'image/png'].includes(file.type) || /\\.(jpe?g|png)$/i.test(file.name) : file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf'));
     if (valid.length !== selected.length) setStatus('Some files were skipped. Use PDF files or JPG/PNG images as required.', true);
     if (!valid.length) return;
     state.files = state.files.concat(valid); if (!configs[state.tool].multiple) state.files = [valid[0]];
@@ -211,7 +211,7 @@
   ['dragleave', 'drop'].forEach((name) => $('#drop-zone').addEventListener(name, (event) => { event.preventDefault(); $('#drop-zone').classList.remove('dragover'); }));
   $('#drop-zone').addEventListener('drop', (event) => {
     const files = [...event.dataTransfer.files]; const input = $('#file-input');
-    const valid = files.filter((file) => state.tool === 'images' ? ['image/jpeg', 'image/png'].includes(file.type) : file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf'));
+    const valid = files.filter((file) => state.tool === 'images' ? ['image/jpeg', 'image/png'].includes(file.type) || /\\.(jpe?g|png)$/i.test(file.name) : file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf'));
     if (!valid.length) { setStatus('No supported files found.', true); return; }
     state.files = state.tool === 'images' || state.tool === 'merge' ? state.files.concat(valid) : [valid[0]];
     renderFiles(); resetResult();
